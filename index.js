@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require('dotenv');
 const app = express();
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, json } = require('sequelize');
 
 dotenv.config();
 
@@ -59,6 +59,17 @@ app.put('/registerPerson', (req, res) => {
     
     res.writeHead(200);
     res.write("Person has been created successfully.");
+    res.end();
+  })();
+});
+
+app.get('/persons', (req, res) => {
+  (async () => {
+    var persons = await Person.findAll();
+
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write(JSON.stringify(persons));
+
     res.end();
   })();
 });
